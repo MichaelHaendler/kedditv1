@@ -1,0 +1,155 @@
+<h1>Users#new</h1>
+<p>Find me in app/views/users/new.html.erb</p>
+
+
+
+<%= form_for(@user) do |f| %>
+
+	<%= f.label :user_name %>
+	<br>
+	<%= f.text_field :user_name %>
+	<br><br>
+	<%= f.label :email %>
+	<br>
+	<%= f.text_field :email %>
+	<br><br>
+
+
+
+	<%= f.label :password %>
+	
+(Display text?) 
+<input type="checkbox" id="myCheck" class="password-checkbox">
+
+  <br>
+
+	<%= f.password_field :password, :id => "zonker" %>
+	<br>
+
+<br>
+<!-- dont need to had the confirm password be erb because  -->
+confirm password:
+ <br>
+ <input type="password" name="user_password3" size ="20" id = "password3"
+ onkeyup="password_confirmation_print()"/>
+
+ <br><br>
+
+ <%= f.submit "Create my account"%>
+
+
+ <p id="demo">nothing to compare.</p>
+
+<script>
+
+  function password_confirmation_print(){
+
+  	var pass2 = document.getElementById('password2').value;
+  	var pass3 = document.getElementById('password3').value;
+
+  	// document.writeln("pass2 is: \"" + pass2 + "\"" + "\n");
+  	
+  	// document.write("pass3 is: \"" + pass3 + "\"");
+
+  	if(pass2 != "" && pass3 != ""){
+  		if(pass2 == pass3){
+
+  			//document.write("match!");
+  			document.getElementById("demo").innerHTML = "match!";
+  		}
+  		else{
+  			//document.write("NO match!");
+  			document.getElementById("demo").innerHTML = "NO match!";
+  		}
+
+
+  	}
+  	else{
+  		//document.write("nothing to compare.");
+  		document.getElementById("demo").innerHTML = "nothing to compare.";
+  	}
+  	
+  }
+
+</script>
+
+<% end %>
+
+<script type="text/javascript">
+
+    var strArray = [];
+
+    // strArray[0] = {"name": "P1"};
+    // strArray[1] = {"name": "P2"};
+    strArray[0] = "P1";
+    strArray[1] = "P2";
+
+    var params = { data: [strArray] };
+
+    $.ajax({
+        type: "POST",
+        url: "/users",
+        data: params,
+        dataType: "json",
+        traditional: true
+    });
+</script>
+
+<!-- <input type="password" name="user_password2" size ="30" id = "password2" 
+onkeyup="password_confirmation_print()"/> -->
+
+<!--
+
+http://www.w3schools.com/jsref/event_onkeyup.asp
+
+http://jing.io/t/pass-javascript-variables-to-rails-controller.html
+<br>
+http://localhost:3000/users/new?method=post&url%5Baction%5D=create&url%5Bcontroller%5D=users&with=getParameters%28%29%3B
+
+<br>
+http://localhost:3000/users/new?method=post&url%5Baction%5D=create&url%5Bcontroller%5D=users&with=getParameters%28%29%3B
+
+https://www.ruby-forum.com/topic/75497
+
+http://stackoverflow.com/questions/9905811/passing-js-array-to-controllers-action
+
+http://stackoverflow.com/questions/10873942/document-write-clears-page
+http://www.w3schools.com/jsref/met_doc_open.asp
+
+http://stackoverflow.com/questions/9717588/checking-password-match-while-typing
+
+<%= link_to "zoom", users_path , method: :get %>
+<br>
+<%= link_to "222zoom", users_path , method: :post %>
+<br>
+<%=  link_to "3Create User", :url => users_path, :method => :post %> 
+
+<%=  link_to "2Create User", :url => {:controller=>'users_controller', :action =>'create'},  
+:method => :post %> 
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("p").hide();
+  });
+  $("#hide").click(function(){
+    $("#thing").hide();
+  });
+  $("#show").click(function(){
+    $("p").show();
+  });
+});
+</script>
+</head>
+<body>
+
+<p>If you click on the "Hide" button, I will disappear.</p>
+<button id="thing">something</button>
+<button id="hide">Hide</button>
+<button id="show">Show</button>
+-->

@@ -1,0 +1,147 @@
+<h1>Users#sign_up</h1>
+<p>Find me in app/views/users/sign_up.html.erb</p>
+
+<p>choose a user name: </p>
+<input type="text" name="user_name" id ="user_name" size ="30" onkeyup="check_if_user_name_already_exists()" />
+<p id = "put--check_if_user_name_already_exists--lookup--here"></p>
+<p id = "test"></p>
+<p id = "test2"></p>
+<p id = "test3"></p>
+<p id = "test4"></p>
+
+<script type="text/javascript">
+
+
+
+
+
+function check_if_user_name_already_exists(){
+
+	var poss_user_name = document.getElementById("user_name").value;
+
+	if(meets_requirements(poss_user_name)){
+		console.log("got into if body of check_if_user_name_already_exists");
+		ajax_code(poss_user_name);
+	}
+}
+
+function meets_requirements(poss_user_name){
+
+	var minLength = 4; //minimum user name length
+
+
+
+	console.log("got into meets_requirements");
+	//if(true){
+	if(poss_user_name.length >= minLength &&
+		poss_user_name.match(/[0-9]/) ){
+		console.log("worked!!!!!!!!!");
+		return true;
+	}
+	else{
+		console.log("NOTTTT working");
+		return false;
+	}
+}
+
+function ajax_code(poss_user_name){
+	console.log("got into poss_user_name");
+
+	var params = { data: poss_user_name };	
+
+	$.ajax({
+	    type: "POST",
+	    url: "/users/sign_up_helper/?format=json",
+	    data: params,
+	    dataType: "json",
+	    traditional: true,
+	    success: function(dataz){
+	    	// document.getElementById("test3").innerHTML = dataz.res[0].user_name;
+	    	// console.log("dataz.res[0].user_name is: " + dataz.res[0].user_name);
+	    	// console.log(dataz)
+	    	if(dataz.exists){
+	    	document.getElementById("test3").innerHTML = "user name already taken";
+	    	}
+	    	else{
+	    		document.getElementById("test3").innerHTML = "user name avaiable";
+	    	}
+	    	console.log("dataz.exists is: " + dataz.exists);
+	    	console.log(dataz)
+	    }
+
+	});
+
+}
+
+	//$( document ).ready(function(ev) {
+	    //check_if_user_name_already_exists();
+	// var strArray = [];
+
+	// // // strArray[0] = {"name": "P1"};
+	// // // strArray[1] = {"name": "P2"};
+	// strArray[0] = "P1";
+	// strArray[1] = "P2";
+
+	//var params = { data: [strArray] };
+
+	//---------------------------------------------
+	//Mike1
+	//var params = { data: document.getElementById("user_name").value};
+	document.getElementById("test3").innerHTML = document.getElementById("user_name").value
+	var params = { data: document.getElementById("user_name").value };
+
+	//document.getElementById("test").innerHTML = params.data;
+	$.ajax({
+	    type: "POST",
+	    url: "/users/sign_up_helper/?format=json",
+	    data: params,
+	    dataType: "json",
+	    traditional: true,
+	    success: function(dataz){
+	    	document.getElementById("test3").innerHTML = dataz.message;
+	    	console.log(dataz);
+	    }
+
+	});
+	//ev.preventDefault();
+
+
+
+	//});
+
+
+
+document.getElementById("put--check_if_user_name_already_exists--lookup--here").innerHTML = "hello! world1";
+
+//}
+
+
+// var xmlhttp = new XMLHttpRequest();
+// var url = "http://localhost:3000/users/sign_up";
+
+// xmlhttp.onreadystatechange = function() {
+//     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//     	document.getElementById("test2").innerHTML = xmlhttp.responseText
+//         var myArr = JSON.parse(xmlhttp.responseText);
+//         document.getElementById("test3").innerHTML = myArr;
+//         //myFunction(myArr);
+//     }
+// }
+// xmlhttp.open("GET", url, true);
+// xmlhttp.send();
+
+function myFunction(arr) {
+    var out = "";
+    var i;
+    for(i = 0; i < arr.length; i++) {
+        out += '<a href="' + arr[i].url + '">' + 
+        arr[i].display + '</a><br>';
+    }
+    document.getElementById("id01").innerHTML = out;
+}
+
+
+
+</script>
+
+
