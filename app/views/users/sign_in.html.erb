@@ -8,23 +8,24 @@
   <br>
   <%= f.text_field :user_name %>
   <br>
-
+  <br>
 
   <%= f.label :password %>  (Display text?) <input type="checkbox" id="password-checkbox"  
   class="password-checkbox2" />
   <br>
   <%= f.password_field :password, :id => "zonker" %>
   <br>
-
+  <br>
 
 <%= f.submit "Log in"%>
   
+<br>
+<br>
+	<%= f.label :remember_me, class: "checkbox inline" do %>
+	    <%= f.check_box :remember_me %>
+	    <span>Remember me on this computer</span>
 
-<%= f.label :remember_me, class: "checkbox inline" do %>
-    <%= f.check_box :remember_me %>
-    <span>Remember me on this computer</span>
-
-<% end %>
+	<% end %>
 
   
 <% end %>

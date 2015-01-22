@@ -8,7 +8,10 @@
 	<%= f.label :user_name %>
 	<br>
 	<%= f.text_field :user_name %>
-	<br><br>
+	
+  <br><br>
+
+
 	<%= f.label :email %>
 	<br>
 	<%= f.text_field :email %>
@@ -19,57 +22,59 @@
 	<%= f.label :password %>
 	
 (Display text?) 
-<input type="checkbox" id="myCheck" class="password-checkbox">
+<input type="checkbox" id="password-checkbox">
 
   <br>
-
-	<%= f.password_field :password, :id => "zonker" %>
+	<%= f.password_field :password, :id => "password", :class => "new_view_password" %>
 	<br>
+
+
 
 <br>
 <!-- dont need to had the confirm password be erb because  -->
 confirm password:
  <br>
- <input type="password" name="user_password3" size ="20" id = "password3"
- onkeyup="password_confirmation_print()"/>
+<!--  <input type="password" name="user_password3" size ="20" id = "password3"
+ onkeyup="password_confirmation_print()"/> -->
+  <input type="password" name="user_password3" size ="20" id = "password_confirm" class="new_view_password"/>
 
  <br><br>
 
  <%= f.submit "Create my account"%>
 
 
- <p id="demo">nothing to compare.</p>
+ <p id="comparison-results">nothing to compare.</p>
 
 <script>
 
-  function password_confirmation_print(){
+  // function password_confirmation_print(){
 
-  	var pass2 = document.getElementById('password2').value;
-  	var pass3 = document.getElementById('password3').value;
+  //   var pass2 = document.getElementById('password2').value;
+  //   var pass3 = document.getElementById('password3').value;
 
-  	// document.writeln("pass2 is: \"" + pass2 + "\"" + "\n");
-  	
-  	// document.write("pass3 is: \"" + pass3 + "\"");
+  //   // document.writeln("pass2 is: \"" + pass2 + "\"" + "\n");
+    
+  //   // document.write("pass3 is: \"" + pass3 + "\"");
 
-  	if(pass2 != "" && pass3 != ""){
-  		if(pass2 == pass3){
+  //   if(pass2 != "" && pass3 != ""){
+  //     if(pass2 == pass3){
 
-  			//document.write("match!");
-  			document.getElementById("demo").innerHTML = "match!";
-  		}
-  		else{
-  			//document.write("NO match!");
-  			document.getElementById("demo").innerHTML = "NO match!";
-  		}
+  //       //document.write("match!");
+  //       document.getElementById("demo").innerHTML = "match!";
+  //     }
+  //     else{
+  //       //document.write("NO match!");
+  //       document.getElementById("demo").innerHTML = "NO match!";
+  //     }
 
 
-  	}
-  	else{
-  		//document.write("nothing to compare.");
-  		document.getElementById("demo").innerHTML = "nothing to compare.";
-  	}
-  	
-  }
+  //   }
+  //   else{
+  //     //document.write("nothing to compare.");
+  //     document.getElementById("demo").innerHTML = "nothing to compare.";
+  //   }
+    
+  // }
 
 </script>
 
@@ -77,22 +82,22 @@ confirm password:
 
 <script type="text/javascript">
 
-    var strArray = [];
+    // var strArray = [];
 
-    // strArray[0] = {"name": "P1"};
-    // strArray[1] = {"name": "P2"};
-    strArray[0] = "P1";
-    strArray[1] = "P2";
+    // // strArray[0] = {"name": "P1"};
+    // // strArray[1] = {"name": "P2"};
+    // strArray[0] = "P1";
+    // strArray[1] = "P2";
 
-    var params = { data: [strArray] };
+    // var params = { data: [strArray] };
 
-    $.ajax({
-        type: "POST",
-        url: "/users",
-        data: params,
-        dataType: "json",
-        traditional: true
-    });
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/users",
+    //     data: params,
+    //     dataType: "json",
+    //     traditional: true
+    // });
 </script>
 
 <!-- <input type="password" name="user_password2" size ="30" id = "password2" 
