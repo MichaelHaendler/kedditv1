@@ -27,20 +27,32 @@ $(document).ready(function(){
 
   //idea: turn inputs into array so that the functions are reuseable. 
 
-  $("#password-checkbox").click(function(){
+    $("#sign_in_view_password_checkbox").click(function(){
+    show(this,"password");
+  });
+
+
+
+
+
+  //--check if user name exists
+  // $("#user_name").keyup(function(){
+  //   //console.log("getting into here at least");
+  //   check_if_user_name_already_exists();
+  // });
+
+  $("#new_view_password_checkbox").click(function(){
     showFields(this,"password","password_confirm");
   });
 
-  //--check if user name exists
-  $("#user_name").keyup(function(){
+  $("#new_view_new_user").keyup(function(){
     //console.log("getting into here at least");
-    check_if_user_name_already_exists();
+    check_if_user_name_already_exists("new_view_user_lookup_res","new_view_new_user");
   });
 
-  //FIX!!!!!!!!
   //--confirm passwords (strings) are the same. 
   $(".new_view_password").keyup(function(){
-    console.log('here');
+    //console.log('here');
     new_view_password_confirmation_print("comparison-results","password","password_confirm");
   });
 
@@ -62,17 +74,17 @@ $(document).ready(function(){
 
 // });
 
-function show(val){
+function show(checkBox,res){
 
   //console.log("got into show");
   //debugger
 
-  if(val.checked == true){
-      document.getElementById('zonker').type="text";
+  if(checkBox.checked == true){
+      document.getElementById(res).type="text";
       //console.log("show as text");
   }
   else{
-      document.getElementById('zonker').type="password";
+      document.getElementById(res).type="password";
       //console.log("show as password");
   }
 
@@ -104,17 +116,26 @@ function showFields(checkBox,f1,f2){
 }
 
 
-function check_if_user_name_already_exists(){
+//res ==id of where to output results to
+function check_if_user_name_already_exists(res,id){
 
   //console.log("got into check_if_user_name_already_exists");
 
-  var poss_user_name = document.getElementById("user_name").value;
+  var poss_user_name = document.getElementById(id).value;
+
+  // console.log("poss_user_name is of type: " + poss_user_name);
+
+  // console.log("res is: " + document.getElementById(res));
 
 
-
+  //if it meets the requirements and say whether or not the user name is taken.
+  //otherwise, we display nothing.
   if(meets_requirements(poss_user_name)){
     //console.log("got into if body of check_if_user_name_already_exists");
-    ajax_code(poss_user_name);
+    ajax_code(res,poss_user_name);
+  }
+  else{
+    document.getElementById(res).innerHTML = "User name";
   }
 }
 
@@ -141,7 +162,7 @@ function meets_requirements(poss_user_name){
   }
 }
 
-function ajax_code(poss_user_name){
+function ajax_code(res,poss_user_name){
   //console.log("got into poss_user_name");
 
   var params = { data: poss_user_name };  
@@ -157,10 +178,10 @@ function ajax_code(poss_user_name){
         // console.log("dataz.res[0].user_name is: " + dataz.res[0].user_name);
         // console.log(dataz)
         if(dataz.exists){
-        document.getElementById("results").innerHTML = "user name already taken";
+        document.getElementById(res).innerHTML = "(taken.) Please choose something else.";
         }
         else{
-          document.getElementById("results").innerHTML = "user name avaiable";
+          document.getElementById(res).innerHTML = "(avaiable!)";
         }
         //console.log("dataz.exists is: " + dataz.exists);
         //console.log(dataz)

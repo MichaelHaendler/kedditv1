@@ -1,28 +1,50 @@
-== README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+1-21-2014-9:34pm
+
+[front page] 
+
+-link to sign in page
+
+-link to sign up page (aka a call to the new action)
+
+
+[sign in]
+
+-allows you to enter a user name and a password. 
+
+-has a radio button that allows you to either show
+or hide the password (the default is to hide the password). 
+
+-working link to sign up page (users/new)
+
+--issues with sign in--
+
+login button.
+
+-takes you to users/new for some reason when you give it proper input. 
+
+-messes up when you give it no input. 
+
+-needs to not go anywhere unless proper input (a user that exists and said users password) 
+
+-needs to (upon proper input) take you to the users (personalized) front page when it works correctly. 
+
+
+[sign up]
+
+-uses ajax to confirm whether user name entered exists or not. 
+
+-allows you to either hide or show password and password confirmation input. 
+
+-says whether or not the strings entered for password and password confirm match or not.  
+
+--issues with sign up--
+
+for some reason the create button takes you to the /users url, specifically I guess the users#create
+action followed by the create view. needs to take you to the users personalized front page, but ONLY
+when the proper input (a user name that isn't taken, a password, and a password confirmation that
+matches the password). 
+
+
+
