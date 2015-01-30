@@ -27,9 +27,7 @@ $(document).ready(function(){
 
   //idea: turn inputs into array so that the functions are reuseable. 
 
-    $("#sign_in_view_password_checkbox").click(function(){
-    show(this,"password");
-  });
+
 
 
 
@@ -41,23 +39,154 @@ $(document).ready(function(){
   //   check_if_user_name_already_exists();
   // });
 
-  $("#new_view_password_checkbox").click(function(){
-    showFields(this,"password","password_confirm");
+//-------------------------------------------------------------------
+//the parts listed below basically work (just need to make sure you're using the right ids)
+
+  //checkbox that asks whether or not to display the password. 
+    $("#sign_in_view_password_checkbox").click(function(){
+    show(this,"password");
   });
 
-  $("#new_view_new_user").keyup(function(){
-    //console.log("getting into here at least");
-    check_if_user_name_already_exists("new_view_user_lookup_res","new_view_new_user");
-  });
+  // //checkbox on whether or not to show the passwords entered
+  // $("#new_view_password_checkbox").click(function(){
+  //   showFields(this,"password","password_confirm");
+  // });
 
-  //--confirm passwords (strings) are the same. 
-  $(".new_view_password").keyup(function(){
-    //console.log('here');
-    new_view_password_confirmation_print("comparison-results","password","password_confirm");
-  });
+  // //sees if user name has been taken by someone else or not. 
+  // $("#new_view_new_user").keyup(function(){
+  //   //console.log("getting into here at least");
+  //   check_if_user_name_already_exists("new_view_user_lookup_res","new_view_new_user");
 
+  //   showButtonCheck();
+  // });
+
+  // //--confirm passwords (strings) are the same. 
+  // $(".new_view_password").keyup(function(){
+  //   //console.log('here');
+  //   new_view_password_confirmation_print("comparison-results","password","password_confirm");
+
+  //   showButtonCheck();
+  // });
+
+  // $("#new_view_submit_button").hide();
+
+  //if everything required has been submitted and meets your satisfaction...
 
 });
+
+
+function showButtonCheck(){
+
+  //console.log("got into showButtonCheck");
+
+//if this works, then replace code and make button. 
+  if(meets_requirements_for_submitting(document.getElementById("new_view_new_user").value,
+                                       document.getElementById("password").value,
+                                       document.getElementById("password_confirm").value
+                                       )
+    ){
+
+    //console.log("meets_requirements_for_submitting returned the value of true");
+
+    //$("#comparison-results").name = "user[password]";
+
+    //replace the "stings match" bit with the actual button for submitting. 
+     //var marq = document.getElementsByTagName('marquee')[0];
+     var marq = document.getElementById("comparison-results");
+    // console.log("marq is: " + marq.innerHTML);
+     var button = document.createElement('button');
+     button.innerHTML = "create account";
+     button.id = "comparison-results";
+      marq.parentNode.appendChild(button);
+      marq.parentNode.removeChild(marq);
+  }
+
+
+}
+
+//user name to see if it's taken
+function meets_requirements_for_submitting(userName, password, passwordC){
+
+  // console.log("got into meets_requirements_for_submitting()");
+  // console.log("userName is: " + userName);
+  // console.log("password is: " + password);
+  // console.log("passwordC is: " + passwordC);
+
+  var user_name_open = user_name_meets_requirements(userName);
+
+  var check_for_blank_values = (userName != "" && password != "" && passwordC != "");
+
+  //console.log("check_for_blank_values is: " + check_for_blank_values);
+
+  var passwords_match = (password == passwordC);
+
+  //console.log("passwords_match is: " + passwords_match + "(fine if it matches on blank due to check_for_blank_values variable)");
+
+
+  
+
+  if(check_for_blank_values && passwords_match && user_name_open){
+      //console.log("returning true for meets_requirements_for_submitting WORKED!!!!!!");
+      return true;
+      }
+  else{
+      // console.log("--------------------")
+      // console.log("check_for_blank_values is: " + check_for_blank_values);
+      // console.log("passwords_match is: " + passwords_match);
+      // console.log("user_name_open is: " + user_name_open);
+      // console.log("returning !FALSE! for meets_requirements_for_submitting");
+    return false;
+  }
+
+
+}
+
+//res ==id of where to output results to
+function user_name_meets_requirements(poss_user_name){
+
+  if(meets_requirements(poss_user_name)){
+    var ajax_results = ajax_code_boolean_version(poss_user_name);
+    //console.log("(user_name_meets_requirements) ajax_results is: " + ajax_results);
+    return !ajax_results;
+  }
+  else{
+    return false;
+  }
+
+}
+
+function ajax_code_boolean_version(poss_user_name){
+  
+  // console.log("got into ajax_code_boolean_version");
+  // console.log("(ajax_code_boolean_version) poss_user_name is: " + poss_user_name);
+
+  var params = { data: poss_user_name };  
+
+  $.ajax({
+      type: "POST",
+      url: "/users/sign_up_helper/?format=json",
+      data: params,
+      dataType: "json",
+      traditional: true,
+      success: function(data){
+        // document.getElementById("test3").innerHTML = dataz.res[0].user_name;
+        // console.log("dataz.res[0].user_name is: " + dataz.res[0].user_name);
+        // console.log(dataz)
+        if(data.exists){
+          //console.log("(ajax_code_boolean_version) returning true");
+          return true;
+        }
+        else{
+         //console.log("(ajax_code_boolean_version) returning false");
+          false;
+        }
+        //console.log("dataz.exists is: " + dataz.exists);
+        //console.log(dataz)
+      }
+
+  });
+
+}
 
 
 // document.addEventListener("DOMContentLoaded", function(event) { 
@@ -80,11 +209,11 @@ function show(checkBox,res){
   //debugger
 
   if(checkBox.checked == true){
-      document.getElementById(res).type="text";
+      document.getElementById(res).type="password";
       //console.log("show as text");
   }
   else{
-      document.getElementById(res).type="password";
+      document.getElementById(res).type="text";
       //console.log("show as password");
   }
 
@@ -121,9 +250,11 @@ function check_if_user_name_already_exists(res,id){
 
   //console.log("got into check_if_user_name_already_exists");
 
+  //console.log("id is: " + id);
+
   var poss_user_name = document.getElementById(id).value;
 
-  // console.log("poss_user_name is of type: " + poss_user_name);
+  //console.log("poss_user_name is: " + poss_user_name);
 
   // console.log("res is: " + document.getElementById(res));
 
@@ -148,16 +279,18 @@ function meets_requirements(poss_user_name){
 
 
   //console.log("got into meets_requirements");
+  //console.log("(meets_requirements) poss_user_name is: " + poss_user_name);
   //if(true){
   if(poss_user_name.length >= minLength &&
     poss_user_name.match(/[0-9]/) ){
-    //console.log("worked!!!!!!!!!");
+    //console.log("(meets_requirements) returned true");
     return true;
   }
 // else if (condition2) {
 // }
   else{
     //console.log("NOTTTT working");
+    //console.log("(meets_requirements) returned false");
     return false;
   }
 }

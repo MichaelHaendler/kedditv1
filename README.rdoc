@@ -47,4 +47,90 @@ when the proper input (a user name that isn't taken, a password, and a password 
 matches the password). 
 
 
+----------------------------------
+
+
+friday, jan 30th 2015, 1AM
+
+-have a bunch of code (that isn't being used at all) in user.js 
+
+-created users_sign_up.js and put it into app/assets/javascript
+
+users_sign_up.js is retrived by the sign_up action in users, and is
+used for a bunch of mostly cosmetic stuff (basically just allowing
+the user to hide or show their passwords as they type it, allowing
+the user to hit the submit button when all the fields have been entered,
+and checks to make sure that the user name not only follows all the requirements
+of a user name, but that it isn't taken. This file can be ignored because it's
+working and isn't related to the problem. 
+
+ISSUE: 
+
+getting the error messages:
+
+NameError (uninitialized constant ActiveRecord::Bases):
+  app/models/user.rb:1:in `<top (required)>'
+  app/helpers/sessions_helper.rb:42:in `successfully_signed_in'
+  app/controllers/users_controller.rb:202:in `sign_in_helper'
+
+This was never a problem before and I haven't recently changed any of the code
+in any of those 3 places. That first error is complaining about the line:
+
+"class User < ActiveRecord::Bases "
+
+which is very first line of the class for my User model. 
+
+
+CAUSE OF ISSUE:
+
+what would have caused this was something I did during my attempt at giving a user
+the ability to post content.
+
+To do that I created a table called Post, that would stores the posts made by the users. I created
+a model for post, a controller for post, and created a folder called "shared"
+in app/views and added the start of a partial to it called _post.html.erb (simply
+following the setup of how they handled microposts in the Hartl book). 
+
+created the Post table via: 
+
+rails generate model Post content:text user:references
+
+created a controller for Post via the command: 
+
+rails generate controller Posts
+
+added the line: 
+
+has_many :post
+
+to my User class for my User model and added the line:
+
+belongs_to :user
+
+to my Post class. 
+
+The code might be ugly, but it was at least working right before I tried to create
+the Post table. right now neither table seems accessible. However, when I type the line:
+
+ActiveRecord::Base.connection.tables
+
+I get this: 
+
+["schema_migrations", "users", "posts"]
+
+don't know about schema_migrations, but the other two are certainly supposed to be there. 
+However, whenever I try and do something like User.all, it just gives me the same error
+as seen above. 
+
+NameError: uninitialized constant ActiveRecord::Bases
+
+any time my code tries to access the table (I think even use of the sessions method is causing 
+my code to crash) causes my website to break. 
+
+
+
+
+
+
+
 

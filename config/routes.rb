@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   #get 'static_pages/front_page'
   #get 'static_pages/front_page' => 'static_pages#front_page'
-root :to => 'static_pages#front_page'
+#root :to => 'static_pages#front_page'
+  #root 'static_pages#front_page'
+  root 'users#front_page' 
   get 'users/toy1'
   get 'users/sign_in'
+  get 'users/sign_out'
   get 'users/sign_up'
   post 'users/sign_up_helper'
   post 'users/sign_in_helper'

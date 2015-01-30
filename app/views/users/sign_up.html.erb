@@ -1,30 +1,68 @@
+
 <h1>Users#sign_up</h1>
 <p>Find me in app/views/users/sign_up.html.erb</p>
 
+
+
+
 <!-- <p>choose a user name: </p> -->
 
-<input type="text" name="user_name" id ="user_name" size ="30" />
+<script src = "app/assets/javascripts/users_sign_up.js"> </script>
 
-<p id = "put--check_if_user_name_already_exists--lookup--here"></p>
 
-<p id = "results"></p>
+<% content_for :lower_body do %>
 
-<%= form_for(:session, url: users_sign_up_helper_path) do |f| %>
+<%= form_for(@user) do |f| %>
 
-  <p>choose a user name: </p>
+<!--new_view_user_lookup_res  -->
+  <%= f.label :user_name, :id =>  "sign_up_view_user_lookup_results" %>
   <br>
-  <%= f.text_field :user_name %>
-
-  <%= f.label :password %>  (Display text?) <input type="checkbox" id="password-checkbox"  
-  class="password-checkbox2" />
+<!--   new_view_new_user -->
+  <%= f.text_field :user_name, :id => "sign_up_view_poss_new_user_name" %>
+  
   <br>
-  <%= f.password_field :password, :class => "zonker" %>
-
-  <p>confirm password: </p>
   <br>
-  <%= f.password_field :password, :class => "zonker" %>
 
-<%= f.submit "Log in"%>
+  <%= f.label :email %>
+  <br>
+  <%= f.text_field :email%>
+  <br>
+  <br>
+
+  <%= f.label :name %>
+  <br>
+  <%= f.text_field :name%>
+  <br>
+  <br>
+
+  <%= f.label :password %> 
+  
+  (Display text?) 
+
+<!-- new_view_password_checkbox -->
+  <input type="checkbox" id="signup_view_password_checkbox">
+
+  <br>
+    
+  <%= f.text_field :password, 
+                        :id => "password", 
+                        :class => "new_view_password" %>
+
+  <br>
+  <br>
+
+  confirm password:
+
+  <br>
+
+  <%= f.text_field :password_confirmation, 
+                      :id => "password_confirm", 
+                      :class => "new_view_password" %>
+  <br><br>
+
+<% end %>
+
+  <p id="comparison_results">nothing to compare.</p>
 
 <% end %>
 

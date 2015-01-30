@@ -32,6 +32,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+#------------------------------------------------
+
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -44,4 +46,7 @@ group :development, :test do
 end
 
 gem 'arel', '6.0.0.beta2'
+
+gem 'will_paginate',           '3.0.7'
+#gem 'bootstrap-will_paginate', '0.0.10' # for use with bootstrap.
 
